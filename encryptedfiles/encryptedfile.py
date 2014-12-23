@@ -1,4 +1,4 @@
-from unittest import TestCase
+import os
 from simplecrypt import encrypt, decrypt
 
 
@@ -13,26 +13,23 @@ class EncryptedFile(object):
             fd.write(encrypted)
 
     def read(self):
+        self.ensure_exists()
+        self.__ensure_data_header_exists()
         with open(self.__path, "r") as fd:
             content = fd.read()
             return decrypt(self.__password, content)
 
+    def is_empty(self):
+        return os.path.getsize(self.__path) == 0
 
-class TestEncryptedFile(TestCase):
+    def ensure_exists(self):
+        if not os.path.exists(self.__path):
+            raise IOError("File doesn't exist.")
 
-    def setUp(self):
-        self.password = "password"
-        self.path = "path_to_file.json"
+    def __ensure_data_header_exists(self):
+        if self.is_empty():
+            self.write("")
 
-    def test_write_and_read_same_content(self):
-        content = "Hello World!"
-        enc_file = EncryptedFile(self.path, self.password)
-        enc_file.write(content)
 
-        self.assertEqual(content, enc_file.read())
 
-    def tearDown(self):
-        import os
-        if os.path.exists(self.path):
-            os.remove(self.path)
 

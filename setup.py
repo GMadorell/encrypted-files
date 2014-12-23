@@ -1,12 +1,15 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-
-desc = open("README.md").read()
+try:
+    import pypandoc
+    desc = pypandoc.convert("README.md", "rst")
+except ImportError:
+    desc = open("README.md").read()
 
 setup(
     name='encryptedfiles',
-    version='0.0.3',
+    version='0.0.4',
     keywords=['secure', 'crypto', 'cryptography', 'encrypt', 'decrypt',
               'encryption', 'decryption'],
     url='https://github.com/Skabed/encrypted-files',
