@@ -1,16 +1,19 @@
 from distutils.core import setup
 from setuptools import find_packages
 
+
+desc = open("README.md").read()
+
 setup(
     name='encryptedfiles',
-    version='0.0.1',
+    version='0.0.3',
     keywords=['secure', 'crypto', 'cryptography', 'encrypt', 'decrypt',
               'encryption', 'decryption'],
     url='https://github.com/Skabed/encrypted-files',
-    license='MIT',
+    license=open("LICENSE").read(),
     author='skabed',
     description="Secure and easy to use encrypted files for Python.",
-    long_description=open("README.md", "r").read(),
+    long_description=desc,
     packages=find_packages(),
     requires="simple_crypt",
     install_requires=["simple_crypt"],
